@@ -22,7 +22,7 @@ public class Ressource {
     }
 
     public void setQuantite(int quantite) {
-        this.quantite = quantite;
+        this.quantite += 5;
     }
 
         
