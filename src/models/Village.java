@@ -10,7 +10,8 @@ import models.ressources.Ressource;
 public class Village {
     static Scanner scanner = new Scanner(System.in);
     private int capacite = 4;
-    private int population = 4;
+    private int populationNonActive = 4;
+    private int populationActive = 0;
     private Maison maison = new Maison(4, 1);
     private Caserne caserne = new Caserne();;
     private Ferme ferme = new Ferme();
@@ -22,17 +23,19 @@ public class Village {
    public void start(){
         while(!isOver){
             afficherJour();
+            ressource.afficheRessources();
             int action = afficherMenu();
             faitAction(action);
 
+            updateRessources();
             ajoutJour();
         }
     }
 
     private void afficherJour(){
-        System.out.println("********************");
+        System.out.println("****************************************");
         System.out.printf("\t\tJOUR %d\t\t\n", jour);
-        System.out.println("********************");
+        System.out.println("****************************************");
 
     }
 
@@ -49,6 +52,7 @@ public class Village {
             System.out.println("construire une atelier: 5");        
             System.out.println("construire une mur de défense: 6");
             System.out.println("quitter: 7");
+            System.out.print("action: ");
             try{
                 int number = scanner.nextInt();
                 scanner.nextLine();
@@ -81,6 +85,7 @@ public class Village {
              case 2:
                 // construire caserne
                 System.out.println("construit caserne");
+                caserne.construire(this);
                 //caserne.build(this);
                 break;
             
@@ -118,8 +123,36 @@ public class Village {
         }
     }
    
+
+    private void updateRessources(){
+        int[] ressourcesRecupDansMines = mine.obtenirRessourcesDuJour();
+        int pierreTrouve = ressourcesRecupDansMines[0];
+        int ferTrouve = ressourcesRecupDansMines[1];
+        ressource.ajoutePierre(pierreTrouve);
+        ressource.ajouteFer(ferTrouve);
+        // recuperer bois
+        // recuperer fer
+    }
+
     private void ajoutJour(){
         jour++;
     }
 
+
+    public int getPierre(){
+        return ressource.getPierre();
+    }
+
+    public void retirePierre(int quantite){
+        ressource.retirePierre(quantite);
+    }
+
+    public int getPopulationNonActive(){
+        return populationNonActive;
+    }
+
+    public void deplaceVillageois(int quantite){
+        populationNonActive -= quantite;
+        populationActive += quantite;
+    }
 }
