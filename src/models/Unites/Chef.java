@@ -1,6 +1,6 @@
-public class Chef extends Unite {
+public class Chef extends Soldat {
     
     public Chef(){
-        super("Chef", 100);
+        super("Chef", 0, 100, 20, 20);
     }
 }
