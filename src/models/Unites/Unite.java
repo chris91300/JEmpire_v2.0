@@ -21,7 +21,6 @@ public class Unite{
         "produire",
         "motiver"
     };
-    ArrayList<String> actions = new ArrayList<String>();
     int sante = 10;
     String nom;
     String action = "reposer";
