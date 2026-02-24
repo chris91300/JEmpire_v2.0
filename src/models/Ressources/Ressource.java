@@ -1,10 +1,10 @@
-package models;
+package models.Ressources;
 
-public class Ressources {
+public class Ressource {
     private String nom;
     private int quantite;
     
-    public Ressources (String nom, int quantite) {
+    public Ressource (String nom, int quantite) {
         this.nom= nom;
         this. quantite = quantite;
     }
