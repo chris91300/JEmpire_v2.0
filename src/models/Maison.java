@@ -1,11 +1,11 @@
 package models;
 
 public class Maison {
-    private int population;
+    private int capaciteDuVillage;
     private int quantite;
 
-    public Maison (int population, int quantite){
-        this.population = population;
+    public Maison (int capacite, int quantite){
+        this.capaciteDuVillage = capacite;
         this.quantite = quantite;
     };
 
@@ -13,16 +13,16 @@ public class Maison {
        return quantite;
    }
    
-    public int getPopulation() {
-        return population;
+    public int getCapaciteDuVillage() {
+        return capaciteDuVillage;
     }
 
-    public void setPopulation(int population) {
-        this.population = population;
+    public void setCapaciteDuVillage(int capaciteDuVillage) {
+        this.capaciteDuVillage += 4;
     }
 
     public void setQuantite(int quantite) {
-        this.quantite = quantite;
+        this.quantite += 1;
     }
 
 }
