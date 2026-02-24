@@ -1,5 +1,8 @@
+import models.Village;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello word!");
+        Village village = new Village();
+        village.start();
     }
 }

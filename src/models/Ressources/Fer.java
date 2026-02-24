@@ -1,4 +1,5 @@
-package models.Ressources;
+package models.ressources;
+/*package models.Ressources;
 
 public class Fer extends Ressource{
   public Fer(){
@@ -6,3 +7,4 @@ public class Fer extends Ressource{
     }
 
 }
+*/
