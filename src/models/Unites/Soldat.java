@@ -1,4 +1,4 @@
-public class Soldat extends Unite {
+public class Soldat extends Villageois {
    
     protected int force = 10;
     protected int defense = 5;
