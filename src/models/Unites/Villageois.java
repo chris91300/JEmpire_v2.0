@@ -1,6 +1,6 @@
 public class Villageois extends Unite {
     
-    public Villageois(String nom){
-        super(nom);
+    public Villageois(){
+        super("Villageois", 4, 10);
     }
 }

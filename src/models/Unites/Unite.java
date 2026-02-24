@@ -22,6 +22,7 @@ public class Unite{
         "motiver"
     };
     int sante = 10;
+    int quantite;
     String nom;
     String action = "reposer";
 
@@ -30,9 +31,10 @@ public class Unite{
         this.nom = nom;
     }
 
-    public Unite(String nom, int sante){
+    public Unite(String nom, int quantite, int sante){
         this.nom = nom;
         this.sante = sante;
+        this.quantite = quantite;
     }
 
 
