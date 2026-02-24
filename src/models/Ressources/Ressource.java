@@ -8,6 +8,18 @@ public class Ressource {
     private int or= 0;
 
 
+    public void afficheRessources(){
+        System.out.printf(
+            "nourriture: %d; bois: %d; pierre: %d; fer: %d; or: %d\n",
+            getNourriture(),
+            getBois(),
+            getPierre(),
+            getFer(),
+            getOr()
+
+        );
+    } 
+
     public void ajouteNourriture(int quantite){
         int quantiteNourriture = getNourriture();
         setNourriture( quantiteNourriture + quantite);
@@ -54,6 +66,11 @@ public class Ressource {
     public int getPierre() {
         return pierre;
     }
+
+    public void retirePierre(int quantite){
+        this.pierre -= quantite;
+    }
+
     public void setPierre(int pierre) {
         this.pierre = pierre;
     }
