@@ -48,21 +48,31 @@ public class Ressource {
     public int getNourriture() {
         return nourriture;
     }
+   
     public void setNourriture(int nourriture) {
         this.nourriture = nourriture;
     }
+    
+    public void retirerNourriture(int quantiteDeNourritureARetirer){
+        nourriture -= quantiteDeNourritureARetirer;        
+    }
+
     public int getBois() {
         return bois;
     }
+    
     public void setBois(int bois) {
         this.bois = bois;
     }
+    
     public int getFer() {
         return fer;
     }
+    
     public void setFer(int fer) {
         this.fer = fer;
     }
+    
     public int getPierre() {
         return pierre;
     }
@@ -71,16 +81,18 @@ public class Ressource {
         this.pierre -= quantite;
     }
 
-     public void retireBois(int quantite){
+    public void retireBois(int quantite){
         this.bois -= quantite;
     }
 
     public void setPierre(int pierre) {
         this.pierre = pierre;
     }
+    
     public int getOr() {
         return or;
     }
+    
     public void setOr(int or) {
         this.or = or;
     }
