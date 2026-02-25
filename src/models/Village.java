@@ -20,7 +20,7 @@ public class Village {
     private int artisansActive = 0;
     private int chefNonActive = 0;
     private int chefActive = 0;
-    private Maison maison = new Maison(4, 1);
+    private Maison maison = new Maison();
     private Caserne caserne = new Caserne();;
     private Ferme ferme = new Ferme();
     private Mine mine = new Mine();
@@ -168,8 +168,16 @@ public class Village {
         return ressource.getPierre();
     }
 
+    public int getBois(){
+        return ressource.getBois();
+    }
+
     public void retirePierre(int quantite){
         ressource.retirePierre(quantite);
+    }
+
+     public void retireBois(int quantite){
+        ressource.retireBois(quantite);
     }
 
     public int getVillageoisNonActive(){
@@ -234,5 +242,9 @@ public class Village {
 
         return reponse;
 
+    }
+
+    public void setCapacite(int nouvelleCapacite){
+        capacite = nouvelleCapacite;
     }
 }

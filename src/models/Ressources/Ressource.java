@@ -71,6 +71,10 @@ public class Ressource {
         this.pierre -= quantite;
     }
 
+     public void retireBois(int quantite){
+        this.bois -= quantite;
+    }
+
     public void setPierre(int pierre) {
         this.pierre = pierre;
     }
