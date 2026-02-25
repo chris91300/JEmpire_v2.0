@@ -9,7 +9,7 @@ public class MurDeDefense {
     private int villageoisAuTravail = 0;
 
 
-    public void construction(Village village){
+    public void construire(Village village){
         if(!murDeDefenseEstConstruit){
             if(villageoisAuTravail == 2){
                 System.out.println("Des villageois sont déjà assignés à cette tâche.");
