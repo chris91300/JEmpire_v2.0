@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import models.batiments.Caserne;
 import models.batiments.Ferme;
+import models.batiments.Maison;
 import models.batiments.Mine;
 import models.ressources.Ressource;
 
@@ -129,7 +130,7 @@ public class Village {
     }
 
     private void formationALaCaserneTermine(){
-        int[] villageoisFormes = caserne.recupereVillageoisFormes();
+        int[] villageoisFormes = caserne.recupereVillageoisEnFormation();
         int soldats = villageoisFormes[0];
         int eclaireurs = villageoisFormes[1];
         soldatsNonActive += soldats;
@@ -184,7 +185,7 @@ public class Village {
         return villageoisNonActive;
     }
 
-    public void deplaceVillageois(int quantite){
+    public void deplaceVillageoisNonActifVersActif(int quantite){
         villageoisNonActive -= quantite;
         villageoisActive += quantite;
     }

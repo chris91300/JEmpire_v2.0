@@ -1,0 +1,28 @@
+
+
+MENU
+
+VOS RESSOURCES ET HABITANT
+
+villageois: 10; soldats: 2; éclaireurs: 2; artisans: 1; chef: 0;
+nourriture: 20; bois: 15; pierre: 30; fer: 18: or: 4;
+
+assigné qui ? 
+villagois: 1;
+soldats: 2; si soldat
+éclaireurs: 3; si éclaireurs
+artisans: 4; si artisan
+chef: 5; si chef
+quitter: 6
+
+si villageois
+vous avez 10 villageois.
+que voulez-vous faire:
+se reposer: 1;
+se balader: 2;
+construire: 3
+quitter: 4;
+
+si se reposer: 
+combien vont se reposer? : un nombre
+villageois - nombre => il reste tant de villageois sans action
