@@ -1,4 +1,5 @@
 package models.ressources;
+/*package models.Ressources;
 
 public class Or extends Ressource {
       public Or(){
@@ -6,3 +7,4 @@ public class Or extends Ressource {
     }
 
 }
+*/

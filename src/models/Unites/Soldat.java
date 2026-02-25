@@ -1,3 +1,5 @@
+package models.unites;
+
 public class Soldat extends Villageois {
    
     protected int force = 10;

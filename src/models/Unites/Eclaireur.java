@@ -1,3 +1,5 @@
+package models.unites;
+
 
 public class Eclaireur extends Villageois {
     
