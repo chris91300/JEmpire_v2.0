@@ -9,6 +9,7 @@ public class Caserne {
     private int totalCaserne = 0;
     private int nombreDeVillageoisEnFormationSoldat = 0;
     private int nombreDeVillageoisEnFormationEclaireur = 0;
+    private int villageoisAuTravail = 0;
 
 
     public void construire(Village village){
@@ -22,6 +23,7 @@ public class Caserne {
             }else{
                 village.retirePierre(quantiteDePierreNecessaire);
                 totalCaserne++;
+                villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
                 village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
@@ -51,5 +53,9 @@ public class Caserne {
     public int[] recupereVillageoisEnFormation(){
         int[] villageoisFormes = {nombreDeVillageoisEnFormationSoldat, nombreDeVillageoisEnFormationEclaireur};
         return villageoisFormes;
+    }
+
+    public int recupereVillageoisQuiOntFiniLaConstructionDesCaserne(){
+        return villageoisAuTravail;
     }
 }
