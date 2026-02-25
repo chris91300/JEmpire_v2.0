@@ -6,7 +6,8 @@ public class Caserne {
     private int quantiteDePierreNecessaire = 4;
     private int capaciteMaxEnFormationDansUneCaserne = 2;
     private int totalCaserne = 0;
-    private int nombreDeVillageoisEnFormation = 0;
+    private int nombreDeVillageoisEnFormationSoldat = 0;
+    private int nombreDeVillageoisEnFormationEclaireur = 0;
 
 
     public void construire(Village village){
@@ -19,18 +20,29 @@ public class Caserne {
         }
     }
 
-    public void ajouteVillageoisDansLesMines(int quantite, Village village){
-        int capaciteTotal = totalCaserne * capaciteMaxEnFormationDansUneCaserne;
+    public void ajouteVillageoisEnFormation(int quantite, String formation, Village village){
+        int villageoisEnFormation = nombreDeVillageoisEnFormationEclaireur + nombreDeVillageoisEnFormationSoldat;
+        int capaciteTotal = totalCaserne * capaciteMaxEnFormationDansUneCaserne -villageoisEnFormation;
         if(quantite > capaciteTotal){
             System.out.printf("Il n'y a que %d places.\n",  capaciteTotal);
         }else{
-            int population = village.getPopulationNonActive();
+            int population = village.getVillageoisNonActive();
             if(quantite > population){
                 System.out.println("Il n'y a pas assez de villageois disponibles.");
             }else{
+                if(formation.equals("soldat")){
+                    nombreDeVillageoisEnFormationSoldat += quantite;
+                }else{
+                    nombreDeVillageoisEnFormationEclaireur += quantite;
+                }
                 village.deplaceVillageois(quantite);
-                nombreDeVillageoisEnFormation += quantite;
+                
             }
         }
+    }
+
+    public int[] recupereVillageoisFormes(){
+        int[] villageoisFormes = {nombreDeVillageoisEnFormationSoldat, nombreDeVillageoisEnFormationEclaireur};
+        return villageoisFormes;
     }
 }

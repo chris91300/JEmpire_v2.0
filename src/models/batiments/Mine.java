@@ -19,7 +19,7 @@ public class Mine {
         if(quantite > capaciteTotal){
             System.out.printf("Il n'y a que %d places.\n",  capaciteTotal);
         }else{
-            int population = village.getPopulationNonActive();
+            int population = village.getVillageoisNonActive();
             if(quantite > population){
                 System.out.println("Il n'y a pas assez de villageois disponibles.");
             }else{
