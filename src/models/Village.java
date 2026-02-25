@@ -126,6 +126,8 @@ public class Village {
         ressource.ajouteFer(ferTrouve);
         // recuperer bois
         // recuperer fer
+        int nourritureProduite = ferme.recupereNourritureProduite();
+        ressource.ajouteNourriture(nourritureProduite);
     }
 
     private void formationALaCaserneTermine(){
