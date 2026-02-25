@@ -1,7 +1,9 @@
+package models.unites;
 
-public class Eclaireur extends Unite {
+
+public class Eclaireur extends Villageois {
     
     public Eclaireur(){
-        super("Eclaireur", 20);
+        super("Eclaireur", 0, 20);
     }
 }

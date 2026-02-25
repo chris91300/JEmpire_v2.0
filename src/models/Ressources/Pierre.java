@@ -1,4 +1,5 @@
-package models.Ressources;
+package models.ressources;
+/*package models.Ressources;
 
 public class Pierre extends Ressource {
       public Pierre(){
@@ -6,3 +7,4 @@ public class Pierre extends Ressource {
     }
 
 }
+*/

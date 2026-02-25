@@ -1,4 +1,5 @@
-package models.Ressources;
+package models.ressources;
+/*package models.Ressources;
 
 public class Nourriture extends Ressource {
       public Nourriture(){
@@ -6,3 +7,4 @@ public class Nourriture extends Ressource {
     }
 
 }
+*/

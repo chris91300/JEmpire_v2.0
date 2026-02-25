@@ -1,6 +1,8 @@
-public class Artisant extends Unite {
+package models.unites;
+
+public class Artisant extends Villageois {
    
     public Artisant(){
-        super("Artisant", 15);
+        super("Artisant", 0, 15);
     }
 }
