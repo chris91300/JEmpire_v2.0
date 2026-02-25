@@ -4,7 +4,7 @@ import models.Village;
 
 public class Foret {
     private int totalVillageoisPouvantAllerEnForet = 4;
-    private int foretsTrouvees = 0;
+    private int foretsTrouvees = 1;
     private int villageoisEnForet = 0;
     private int quantiteMaxDeNourriturePouvantEtreTrouve = 4;
     private int quantiteMaxDeBoisPouvantEtreTrouve = 6;

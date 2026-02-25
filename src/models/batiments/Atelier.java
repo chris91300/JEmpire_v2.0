@@ -9,6 +9,7 @@ public class Atelier {
     private int quantiteTotalAtelier = 0;
     private int capaciteTotalDeVillageoisEnFormationParAtelier = 1;
     private int villageoisEnFormation = 0; 
+    private int villageoisAuTravail = 0;
     // voir apres pour les outils et amelioration batiments
 
     public void construire(Village village){
@@ -29,9 +30,11 @@ public class Atelier {
                 }
             }else{
                 village.retirePierre(quantiteDePierreNecessaireALaConstruction);
-                village.retireBois(quantiteDeBoisNecessaireALaConstruction);
-                quantiteTotalAtelier++;
+                village.retireBois(quantiteDeBoisNecessaireALaConstruction);               
                 village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
+                 quantiteTotalAtelier++;
+                 villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
+                 village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
         
@@ -51,5 +54,9 @@ public class Atelier {
 
     public int recupereVillageoisEnFormation(){
         return villageoisEnFormation;
+    }
+
+    public int recupereVillageoisQuiOntConstruitAtelier(){
+        return villageoisAuTravail;
     }
 }
