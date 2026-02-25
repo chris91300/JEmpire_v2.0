@@ -11,7 +11,7 @@ public class Atelier {
     private int villageoisEnFormation = 0; 
     // voir apres pour les outils et amelioration batiments
 
-    public void construction(Village village){
+    public void construire(Village village){
         int villageoisNonActif = village.getVillageoisNonActive();
         if(villageoisNonActif < quantiteDeVillageoisNecessaireALaConstruction){
             System.out.println("Vous n'avez pas assez de villageois de disponible");
