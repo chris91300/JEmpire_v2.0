@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import models.batiments.Caserne;
 import models.batiments.Ferme;
+import models.batiments.Foret;
 import models.batiments.Maison;
 import models.batiments.Mine;
 import models.ressources.Ressource;
@@ -25,6 +26,7 @@ public class Village {
     private Caserne caserne = new Caserne();;
     private Ferme ferme = new Ferme();
     private Mine mine = new Mine();
+    private Foret foret = new Foret();
     private Ressource ressource = new Ressource();
     private int jour = 1;
     private boolean isOver = false;
@@ -120,15 +122,39 @@ public class Village {
    
 
     private void updateRessources(){
+        // ressources mine
         int[] ressourcesRecupDansMines = mine.obtenirRessourcesDuJour();
-        int pierreTrouve = ressourcesRecupDansMines[0];
-        int ferTrouve = ressourcesRecupDansMines[1];
-        ressource.ajoutePierre(pierreTrouve);
-        ressource.ajouteFer(ferTrouve);
-        // recuperer bois
-        // recuperer fer
+        int pierreTrouveDansMine = ressourcesRecupDansMines[0];
+        int ferTrouveDansMine = ressourcesRecupDansMines[1];
+        ressource.ajoutePierre(pierreTrouveDansMine);
+        ressource.ajouteFer(ferTrouveDansMine);
+
+        // ressources ferme
         int nourritureProduite = ferme.recupereNourritureProduite();
         ressource.ajouteNourriture(nourritureProduite);
+
+        // ressources foret
+        int[] ressourcesTrouveesEnForet = foret.recuperereRessourcesTrouvees();
+        int nourritureTrouverEnForet = ressourcesTrouveesEnForet[0];
+        int boisTrouverEnForet = ressourcesTrouveesEnForet[1];
+        int villageoisTrouverEnForet = ressourcesTrouveesEnForet[2];
+        int minesTrouverEnForet = ressourcesTrouveesEnForet[3];
+        ressource.ajouteNourriture(nourritureTrouverEnForet);
+        ressource.ajouteBois(boisTrouverEnForet);
+        int population = getPopulation();
+        if((villageoisTrouverEnForet + population) > capacite){
+            System.out.println("Vous n'avez pas assez de place");
+        }else{
+            // on augmente les villageois
+            villageoisNonActive += villageoisTrouverEnForet;
+            System.out.println("Super vous avez augmenté votre population");
+        }
+
+        if(minesTrouverEnForet > 0){
+            mine.ajouteAuTotalDeMines(minesTrouverEnForet);
+        }
+       
+        
     }
 
     private void formationALaCaserneTermine(){

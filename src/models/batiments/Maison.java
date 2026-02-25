@@ -24,6 +24,7 @@ public class Maison {
                 village.retireBois(quantiteBoisNecessaire);
                 System.out.println("Vous avez construit une maison");
                 village.setCapacite(capacite * quantiteDeMaison);
+                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
 
