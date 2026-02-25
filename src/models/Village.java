@@ -43,7 +43,8 @@ public class Village {
                 afficherJour();
                 ressource.afficheRessources();
                 afficherVillageoisNonActif();
-                int action = afficherMenu();
+                int choixDuMenu = afficherMenuGlobal();
+                int action = proposeMenuEnFonctionDuPersonnage(choixDuMenu);
                 faitAction(action);
                 if (isOver) {
                     break;
@@ -85,9 +86,68 @@ public class Village {
         System.out.println("****************************************");
     }
 
-    private int afficherMenu() {
-
+    private int afficherMenuGlobal(){
+        int numberActionMax = 1;
         System.out.println("que fait on aujourd'hui?");
+        System.out.println("assigner des villageois à une tache: 1");
+
+        if(soldatsNonActive > 0){
+            System.out.println("assigner des soldats à une tache: 2");
+            numberActionMax++;
+        }
+
+        if(artisansNonActive > 0){
+            System.out.println("assigner des artisans à une tache: 3");
+            numberActionMax++;
+        }
+
+        if(eclaireursNonActive > 0){
+            System.out.println("assigner des éclaireurs à une tache: 4");
+            numberActionMax++;
+        }
+
+        if(chefNonActive > 0){
+            System.out.println("assigner le chef à une tache: 5");
+            numberActionMax++;
+        }
+         int action = demandeAction(1, numberActionMax);
+        return action;
+
+    }
+
+    private int proposeMenuEnFonctionDuPersonnage(int choix){
+        int action = 0;
+         switch (choix) {
+            case 1:
+                // proposer menu pour villageois
+                    action = afficherMenuPourVillageois();
+                break;
+
+            case 2:
+                // proposer menu pour soldat
+                break;
+
+             case 3:
+                // proposer menu pour artisans
+                break;
+
+            case 4:
+                // proposer menu pour eclaireur
+                break;
+
+            case 5:
+                // proposer menu pour chef
+                break;
+
+            default:
+                System.out.println("action inconnue.");
+         }
+
+         return action;
+    }
+
+    private int afficherMenuPourVillageois() {
+
         System.out.println("construire une maison: 1");
         System.out.println("aller en foret: 2");
         System.out.println("aller à la mine: 3");
@@ -103,6 +163,47 @@ public class Village {
 
         int action = demandeAction(1, 12);
         return action;
+
+    }
+
+    private int afficherMenuPourSoldats() {
+
+        System.out.println("envoyer au mur: 1");
+        System.out.println("envoyer en mission externe: 2");
+        System.out.println("finir la journée: 3");
+        System.out.println("quitter le jeu: 4");
+
+        int action = demandeAction(1, 4);
+        return action;
+
+    }
+
+    private int afficherMenuPourArtisans() {
+
+        System.out.println("améliorer les batiments: 1");
+        System.out.println("produire des outils: 2");
+        System.out.println("finir la journée: 3");
+        System.out.println("quitter le jeu: 4");
+
+        int action = demandeAction(1, 4);
+        return action;
+
+    }
+
+    private int afficherMenuPourEclaireurs() {
+
+        System.out.println("aller explorer: 1");
+        System.out.println("finir la journée: 2");
+        System.out.println("quitter le jeu: 3");
+
+        int action = demandeAction(1, 3);
+        return action;
+
+    }
+
+    private int afficherMenuPourChef() {
+
+        return afficherMenuPourSoldats();
 
     }
 
@@ -332,12 +433,9 @@ public class Village {
     
     private void YEnAvaitIlPourToutLeMonde(){
         int nourritureRestante = ressource.getNourriture();
-        System.out.printf("nourriture restante: %d", nourritureRestante);
+        
         if(nourritureRestante < 0){
-            // villageois meurent en premier
-            // artisant
-            //soldat
-            //eclaireur
+           
             for(int i=nourritureRestante; i<0; i++){
                 if(villageoisNonActive > 0){
                     villageoisNonActive--;
