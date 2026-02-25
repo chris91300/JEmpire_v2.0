@@ -3,6 +3,7 @@ package models.batiments;
 import models.Village;
 
 public class Caserne {
+    private int quantiteDeVillageoisNecessaireALaConstruction = 2;
     private int quantiteDePierreNecessaire = 4;
     private int capaciteMaxEnFormationDansUneCaserne = 2;
     private int totalCaserne = 0;
@@ -11,12 +12,17 @@ public class Caserne {
 
 
     public void construire(Village village){
-        int quantiteTotalDePierre = village.getPierre();
-        if(quantiteTotalDePierre < quantiteDePierreNecessaire){
-            System.out.println("Vos ressources sont insuffisante");
+        int villageoisNonActif = village.getVillageoisNonActive();
+        if(villageoisNonActif < quantiteDeVillageoisNecessaireALaConstruction){
+            System.out.println("Vous n'avez pas assez de villageois de disponible");
         }else{
-            village.retirePierre(quantiteDePierreNecessaire);
-            totalCaserne++;
+            int quantiteTotalDePierre = village.getPierre();
+            if(quantiteTotalDePierre < quantiteDePierreNecessaire){
+                System.out.println("Vos ressources sont insuffisante");
+            }else{
+                village.retirePierre(quantiteDePierreNecessaire);
+                totalCaserne++;
+            }
         }
     }
 
@@ -35,13 +41,13 @@ public class Caserne {
                 }else{
                     nombreDeVillageoisEnFormationEclaireur += quantite;
                 }
-                village.deplaceVillageois(quantite);
+                village.deplaceVillageoisNonActifVersActif(quantite);
                 
             }
         }
     }
 
-    public int[] recupereVillageoisFormes(){
+    public int[] recupereVillageoisEnFormation(){
         int[] villageoisFormes = {nombreDeVillageoisEnFormationSoldat, nombreDeVillageoisEnFormationEclaireur};
         return villageoisFormes;
     }

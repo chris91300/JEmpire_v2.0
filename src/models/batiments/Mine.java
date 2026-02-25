@@ -23,7 +23,7 @@ public class Mine {
             if(quantite > population){
                 System.out.println("Il n'y a pas assez de villageois disponibles.");
             }else{
-                village.deplaceVillageois(quantite);
+                village.deplaceVillageoisNonActifVersActif(quantite);
                 nombreDeVillageoisDansLesMines += quantite;
             }
         }
@@ -43,5 +43,9 @@ public class Mine {
         
         
         return (int) (Math.random() * (max - min + 1) + min);
+    }
+
+    public int recupereVillageoisPartiALaMine(){
+        return nombreDeVillageoisDansLesMines;
     }
 }
