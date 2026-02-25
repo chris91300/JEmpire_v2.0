@@ -1,28 +1,22 @@
 package models;
 
 public class Maison {
-    private int population;
-    private int quantite;
+    private int capacite = 4;
+    private int quantite = 1;
+    private int quantiteBoisNecessaire = 2;
 
-    public Maison (int population, int quantite){
-        this.population = population;
-        this.quantite = quantite;
-    };
-
-   public int getQuantite() {
-       return quantite;
-   }
-   
-    public int getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(int population) {
-        this.population = population;
+    public void setPopulation(int capacite) {
+        this.capacite = capacite;
     }
 
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
 
+    public void construire(Village village) {
+        quantite++;
+
+    }
+    // village.ajouteCapacite(4);
+    // village.ajouteVillageois(1);
 }

@@ -1,4 +1,4 @@
-package models.Ressources;
+package models.ressources;
 
 public class Ressource {
     private String nom;
