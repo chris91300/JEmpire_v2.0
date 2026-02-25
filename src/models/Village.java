@@ -10,8 +10,16 @@ import models.ressources.Ressource;
 public class Village {
     static Scanner scanner = new Scanner(System.in);
     private int capacite = 4;
-    private int populationNonActive = 4;
-    private int populationActive = 0;
+    private int villageoisNonActive = 4;
+    private int villageoisActive = 0;
+    private int soldatsNonActive =0;
+    private int soldatsActive = 0;
+    private int eclaireursNonActive = 0;
+    private int eclaireursActive = 0;
+    private int artisansNonActive = 0;
+    private int artisansActive = 0;
+    private int chefNonActive = 0;
+    private int chefActive = 0;
     private Maison maison = new Maison(4, 1);
     private Caserne caserne = new Caserne();;
     private Ferme ferme = new Ferme();
@@ -19,6 +27,7 @@ public class Village {
     private Ressource ressource = new Ressource();
     private int jour = 1;
     private boolean isOver = false;
+
 
    public void start(){
         while(!isOver){
@@ -28,6 +37,8 @@ public class Village {
             faitAction(action);
 
             updateRessources();
+            formationALaCaserneTermine();
+            desGensVeulentrejoindreLeVillage();
             ajoutJour();
         }
     }
@@ -40,34 +51,17 @@ public class Village {
     }
 
     private int afficherMenu(){
-        boolean isValid = false;
-        int action = 0;
-
-        while(!isValid){
-            System.out.println("que fait on aujourd'hui?");
-            System.out.println("construire une maison: 1");
-            System.out.println("construire une caserne: 2");
-            System.out.println("construire une ferme: 3");
-            System.out.println("construire une mine: 4");
-            System.out.println("construire une atelier: 5");        
-            System.out.println("construire une mur de défense: 6");
-            System.out.println("quitter: 7");
-            System.out.print("action: ");
-            try{
-                int number = scanner.nextInt();
-                scanner.nextLine();
-                if(number > 0 && number < 8){
-                    isValid = true;
-                    action = number;
-                }else{
-                    System.out.println("un numéro valide svp");
-                }
-                
-            }catch(Exception e){
-                System.out.println("un numéro valide svp");
-            }
-
-        }
+        
+        System.out.println("que fait on aujourd'hui?");
+        System.out.println("construire une maison: 1");
+        System.out.println("construire une caserne: 2");
+        System.out.println("construire une ferme: 3");
+        System.out.println("construire une mine: 4");
+        System.out.println("construire une atelier: 5");        
+        System.out.println("construire une mur de défense: 6");
+        System.out.println("quitter: 7");
+        
+        int action = demandeAction(1, 7);
          return action;
        
 
@@ -134,8 +128,39 @@ public class Village {
         // recuperer fer
     }
 
+    private void formationALaCaserneTermine(){
+        int[] villageoisFormes = caserne.recupereVillageoisFormes();
+        int soldats = villageoisFormes[0];
+        int eclaireurs = villageoisFormes[1];
+        soldatsNonActive += soldats;
+        eclaireursNonActive += eclaireurs;
+    }
+
+    private void desGensVeulentrejoindreLeVillage(){
+        double tauxDeCroissance = 0.2;
+        int population = getPopulation();
+        int inconnus = (int) tauxDeCroissance * population *(1 -(population / capacite));
+        System.out.printf("Il y a %d personnes qui veulent rejoindre votre village.", inconnus);
+        System.out.println("Voulez-vous les accepter? ");
+        boolean accepte = demandeOuiOuNon();
+        
+        if(accepte){
+            if((inconnus + population) > capacite){
+                System.out.println("Vous n'avez pas assez de place");
+            }else{
+                // on augmente les villageois
+                villageoisNonActive += inconnus;
+                System.out.println("Super vous avez augmenté votre population");
+            }
+        }
+    }
+
     private void ajoutJour(){
         jour++;
+    }
+
+    private int getPopulation(){
+        return villageoisNonActive + soldatsNonActive + eclaireursNonActive + artisansNonActive + chefNonActive;
     }
 
 
@@ -147,12 +172,67 @@ public class Village {
         ressource.retirePierre(quantite);
     }
 
-    public int getPopulationNonActive(){
-        return populationNonActive;
+    public int getVillageoisNonActive(){
+        return villageoisNonActive;
     }
 
     public void deplaceVillageois(int quantite){
-        populationNonActive -= quantite;
-        populationActive += quantite;
+        villageoisNonActive -= quantite;
+        villageoisActive += quantite;
+    }
+
+    private int demandeAction(int min, int max){
+        boolean isValid = false;
+        int action = 1;
+        while(!isValid){
+            System.out.print("action: ");
+            try{
+                int number = scanner.nextInt();
+                scanner.nextLine();
+                if(number > min && number <= max){
+                    isValid = true;
+                    action = number;
+                }else{
+                    System.out.printf("un numéro entre %d et %d\n", min, max);
+                }
+                
+            }catch(Exception e){
+                System.out.printf("un numéro entre %d et %d\n", min, max);
+            }
+        }
+
+        return action;
+
+    }
+
+    private boolean demandeOuiOuNon(){
+        boolean isValid = false;
+        boolean reponse = false;
+        while(!isValid){
+            System.out.print("vous acceptez?(O/N): ");
+            try{
+                String accepte = scanner.nextLine();
+                String accepteUppercase = accepte.toUpperCase();
+                
+                if(accepteUppercase.equals("O") && accepteUppercase.equals("N")){
+                    
+                    if(accepteUppercase.equals("O")){
+                        reponse = true;
+                    }else{
+                        reponse = false;
+                    }
+
+                    isValid = true;
+                }else{
+                    System.out.println("O pour Oui, N pour Non");
+                }
+                
+            }catch(Exception e){
+                System.out.println("O pour Oui, N pour Non");
+            }
+        }
+
+        return reponse;
+
     }
 }
