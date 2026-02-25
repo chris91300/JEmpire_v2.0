@@ -33,7 +33,9 @@ public class Ferme {
     }
 
     public int recupereVillageoisQuiConstruisentUneFerme() {
-        return villageoisAuTravail;
+        int villageoisRecuperes = villageoisAuTravail;
+        villageoisAuTravail = 0;
+        return villageoisRecuperes;
     }
 
 }

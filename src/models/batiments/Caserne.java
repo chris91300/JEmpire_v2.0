@@ -51,11 +51,17 @@ public class Caserne {
     }
 
     public int[] recupereVillageoisEnFormation(){
-        int[] villageoisFormes = {nombreDeVillageoisEnFormationSoldat, nombreDeVillageoisEnFormationEclaireur};
+        int soldatRecuperes = nombreDeVillageoisEnFormationSoldat;
+        nombreDeVillageoisEnFormationSoldat = 0;
+        int eclaireurRecuperes = nombreDeVillageoisEnFormationEclaireur;
+        nombreDeVillageoisEnFormationEclaireur = 0;
+        int[] villageoisFormes = {soldatRecuperes, eclaireurRecuperes};
         return villageoisFormes;
     }
 
     public int recupereVillageoisQuiOntFiniLaConstructionDesCaserne(){
-        return villageoisAuTravail;
+        int villageoisRecuperes = villageoisAuTravail;
+        villageoisAuTravail = 0;
+        return villageoisRecuperes;
     }
 }

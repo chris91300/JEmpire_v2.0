@@ -35,7 +35,9 @@ public class MurDeDefense {
     }
 
     public int recupererVillageois(){
-        return villageoisAuTravail;
+         int villageoisRecuperes = villageoisAuTravail;
+        villageoisAuTravail = 0;
+        return villageoisRecuperes;
     }
 
 }
