@@ -7,6 +7,7 @@ public class Maison {
     private int capacite = 4;
     private int quantiteDeMaison = 1;
     private int quantiteBoisNecessaire = 2;
+    private int villageoisAuTravail = 0;
 
 
     public void construire(Village village) {
@@ -19,12 +20,18 @@ public class Maison {
                 System.out.println("Pas assez de bois pour construire la maison");
             } else {
                 quantiteDeMaison++;
+                villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
                 village.retireBois(quantiteBoisNecessaire);
                 System.out.println("Vous avez construit une maison");
                 village.setCapacite(capacite * quantiteDeMaison);
             }
         }
 
+    }
+
+
+    public int recupereVillageoisQuiConstruisentUneMaison(){
+        return villageoisAuTravail;
     }
    
 }
