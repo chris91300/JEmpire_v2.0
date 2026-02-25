@@ -55,6 +55,11 @@ public class Village {
             updateRessources();
             lesVillageoisOntFiniLeurtache();
             desGensVeulentrejoindreLeVillage();
+            lesVillageoisMangent();
+            YEnAvaitIlPourToutLeMonde();
+            if (isOver) {
+                break;
+            }
             ajoutJour();
         }
     }
@@ -193,18 +198,13 @@ public class Village {
         ressource.ajouteBois(boisTrouverEnForet);
         int population = getPopulation();
         if (villageoisTrouverEnForet != 0) {
-            System.out.printf("on a trouvé %d personnes dans la foret\n", villageoisTrouverEnForet);
             if ((villageoisTrouverEnForet + population) > capacite) {
                 System.out.println("Vous n'avez pas assez de place");
             } else {
                 // on augmente les villageois
                 villageoisNonActive += villageoisTrouverEnForet;
-                 System.out.printf("maintenant non actif : %d\n", villageoisNonActive);
                 System.out.println("Super vous avez augmenté votre population");
             }
-        }else{
-            System.out.println("on a trouvé personnes dans la foret");
-
         }
 
         if (minesTrouverEnForet > 0) {
@@ -322,6 +322,52 @@ public class Village {
             }
         }
 
+    }
+
+    private void lesVillageoisMangent(){
+        int nourritureConsommees = getPopulation();
+        ressource.retirerNourriture(nourritureConsommees);
+    }
+
+    
+    private void YEnAvaitIlPourToutLeMonde(){
+        int nourritureRestante = ressource.getNourriture();
+        System.out.printf("nourriture restante: %d", nourritureRestante);
+        if(nourritureRestante < 0){
+            // villageois meurent en premier
+            // artisant
+            //soldat
+            //eclaireur
+            for(int i=nourritureRestante; i<0; i++){
+                if(villageoisNonActive > 0){
+                    villageoisNonActive--;
+                    ressource.ajouteNourriture(1);
+                    continue;
+                }else if(artisansNonActive > 0){
+                    artisansNonActive--;
+                    ressource.ajouteNourriture(1);
+                    continue;
+                }else if(soldatsNonActive > 0){
+                    soldatsNonActive--;
+                    ressource.ajouteNourriture(1);
+                    continue;
+                }else if( eclaireursNonActive > 0){
+                    eclaireursNonActive--;
+                    ressource.ajouteNourriture(1);
+                    continue;
+                }else{
+                    chefNonActive--;
+                    ressource.ajouteNourriture(1);
+                }
+            }
+            
+        }
+   
+        int population = getPopulation();
+        if(population <= 0){
+            isOver = true;
+            System.out.println("tout le monde est mort de faim.");
+        }
     }
 
     private void ajoutJour() {
