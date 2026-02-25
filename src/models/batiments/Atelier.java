@@ -53,10 +53,14 @@ public class Atelier {
     }
 
     public int recupereVillageoisEnFormation(){
-        return villageoisEnFormation;
+         int villageoisRecuperes = villageoisEnFormation;
+        villageoisEnFormation = 0;
+        return villageoisRecuperes;
     }
 
     public int recupereVillageoisQuiOntConstruitAtelier(){
-        return villageoisAuTravail;
+        int villageoisRecuperes = villageoisAuTravail;
+        villageoisAuTravail = 0;
+        return villageoisRecuperes;
     }
 }

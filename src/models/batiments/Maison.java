@@ -32,7 +32,9 @@ public class Maison {
 
 
     public int recupereVillageoisQuiConstruisentUneMaison(){
-        return villageoisAuTravail;
+        int villageoisRecuperes = villageoisAuTravail;
+        villageoisAuTravail = 0;
+        return villageoisRecuperes;
     }
    
 }

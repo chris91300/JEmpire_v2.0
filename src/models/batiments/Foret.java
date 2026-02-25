@@ -30,24 +30,50 @@ public class Foret {
     public int[] recuperereRessourcesTrouvees(){
         // nourriture, bois, villageois;
         // attention au random(0, 0) !!! a gérer
-        int nombreDeVillageoisQuiOntTrouveNourriture = randomRessources(0,villageoisEnForet);
-        int nourritureTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveNourriture, nombreDeVillageoisQuiOntTrouveNourriture * quantiteMaxDeNourriturePouvantEtreTrouve);
-       
-        int nombreDeVillageoisQuiOntTrouveBois = randomRessources(0,villageoisEnForet - nombreDeVillageoisQuiOntTrouveNourriture);
-        int boisTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveBois, nombreDeVillageoisQuiOntTrouveBois * quantiteMaxDeBoisPouvantEtreTrouve);
+        int personnesQuiOntRienTrouveesPourLeMoment = villageoisEnForet;
+        int nourritureTrouve = 0;
+        int boisTrouve = 0;
+        int villageoisTrouve = 0;
+        int minesTrouve = 0;
 
-        int nombreDeVillageoisQuiOntTrouveVillageois = randomRessources(0,villageoisEnForet - nombreDeVillageoisQuiOntTrouveNourriture - nombreDeVillageoisQuiOntTrouveNourriture);
-        int villageoisTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveVillageois, nombreDeVillageoisQuiOntTrouveVillageois * quantiteMaxDeVillageoisePouvantEtreTrouve);
+        if(personnesQuiOntRienTrouveesPourLeMoment > 0){
+            int nombreDeVillageoisQuiOntTrouveNourriture = randomRessources(0, personnesQuiOntRienTrouveesPourLeMoment);
+            nourritureTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveNourriture, nombreDeVillageoisQuiOntTrouveNourriture * quantiteMaxDeNourriturePouvantEtreTrouve);
+            System.out.printf("nourriture trouve en foret %d\n",nombreDeVillageoisQuiOntTrouveNourriture );
 
-        int nombreDeVillageoisQuiOntTrouveMines = randomRessources(0,villageoisEnForet - nombreDeVillageoisQuiOntTrouveNourriture - nombreDeVillageoisQuiOntTrouveNourriture - nombreDeVillageoisQuiOntTrouveVillageois);
-        int minesTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveMines, nombreDeVillageoisQuiOntTrouveMines * quantiteMaxDeMinesPouvantEtreTrouve);
+            personnesQuiOntRienTrouveesPourLeMoment -= nombreDeVillageoisQuiOntTrouveNourriture;
+            if(personnesQuiOntRienTrouveesPourLeMoment > 0){
+                int nombreDeVillageoisQuiOntTrouveBois = randomRessources(0, personnesQuiOntRienTrouveesPourLeMoment);
+                boisTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveBois, nombreDeVillageoisQuiOntTrouveBois * quantiteMaxDeBoisPouvantEtreTrouve);
+                System.out.printf("bois trouve en foret %d\n",nombreDeVillageoisQuiOntTrouveBois );
+                personnesQuiOntRienTrouveesPourLeMoment -=  nombreDeVillageoisQuiOntTrouveBois;
 
+                if(personnesQuiOntRienTrouveesPourLeMoment > 0){
+                     int nombreDeVillageoisQuiOntTrouveVillageois = randomRessources(0,personnesQuiOntRienTrouveesPourLeMoment);
+                    villageoisTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveVillageois, nombreDeVillageoisQuiOntTrouveVillageois * quantiteMaxDeVillageoisePouvantEtreTrouve);
+                    System.out.printf("gens trouve en foret %d\n",nombreDeVillageoisQuiOntTrouveVillageois );
+                    personnesQuiOntRienTrouveesPourLeMoment -=  nombreDeVillageoisQuiOntTrouveVillageois;
+
+                    if(personnesQuiOntRienTrouveesPourLeMoment > 0){
+                        int nombreDeVillageoisQuiOntTrouveMines = randomRessources(0, personnesQuiOntRienTrouveesPourLeMoment);
+                        minesTrouve = randomRessources(nombreDeVillageoisQuiOntTrouveMines, nombreDeVillageoisQuiOntTrouveMines * quantiteMaxDeMinesPouvantEtreTrouve);
+                        System.out.printf("mines trouve en foret %d\n",nombreDeVillageoisQuiOntTrouveMines );
+                    }
+                    
+                }
+            }
+        }
+        
         int[] ressources = {nourritureTrouve, boisTrouve, villageoisTrouve, minesTrouve};
         return ressources;
     }
 
 
     public int recupereVillageoisPartientEnForet(){
-        return villageoisEnForet;
+        System.out.printf("on recupere les villlageois partie en foret : %d\n", villageoisEnForet);
+        int villageoisRecuperes = villageoisEnForet;
+        villageoisEnForet = 0;
+         System.out.printf("villageois recuperé : %d; %d\n", villageoisRecuperes, villageoisEnForet);
+        return villageoisRecuperes;
     }
 }

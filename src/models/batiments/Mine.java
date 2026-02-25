@@ -15,7 +15,7 @@ public class Mine {
    }
 
     public void ajouteVillageoisDansLesMines(int quantite, Village village){
-        int capaciteTotal = totalMine * capaciteMaxDansUneMine;
+        int capaciteTotal = totalMine * capaciteMaxDansUneMine - nombreDeVillageoisDansLesMines;
         if(quantite > capaciteTotal){
             System.out.printf("Il n'y a que %d places.\n",  capaciteTotal);
         }else{
@@ -44,6 +44,8 @@ public class Mine {
     }
 
     public int recupereVillageoisPartiALaMine(){
-        return nombreDeVillageoisDansLesMines;
+        int villageoisRecuperes = nombreDeVillageoisDansLesMines;
+        nombreDeVillageoisDansLesMines = 0;
+        return villageoisRecuperes;
     }
 }
