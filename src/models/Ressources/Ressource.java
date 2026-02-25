@@ -85,7 +85,5 @@ public class Ressource {
         this.or = or;
     }
     
-   
-        
   
 }
