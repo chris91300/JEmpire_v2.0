@@ -27,6 +27,7 @@ public class Ferme {
                 village.retireBois(quantiteBoisNecessaire);
                 System.out.println("Vous avez construit une maison");
                 villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
+                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
     }

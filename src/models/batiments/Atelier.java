@@ -31,6 +31,7 @@ public class Atelier {
                 village.retirePierre(quantiteDePierreNecessaireALaConstruction);
                 village.retireBois(quantiteDeBoisNecessaireALaConstruction);
                 quantiteTotalAtelier++;
+                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
         

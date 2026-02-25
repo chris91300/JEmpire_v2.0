@@ -22,6 +22,7 @@ public class Caserne {
             }else{
                 village.retirePierre(quantiteDePierreNecessaire);
                 totalCaserne++;
+                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
             }
         }
     }
