@@ -1,5 +1,6 @@
 package models;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import models.batiments.Caserne;
@@ -476,7 +477,8 @@ public class Village {
                     System.out.printf("un numéro entre %d et %d\n", min, max);
                 }
 
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
                 System.out.printf("un numéro entre %d et %d\n", min, max);
             }
         }
