@@ -1,7 +1,7 @@
 package models.ressources;
 
 public class Ressource {
-    private int nourriture = 10;
+    private int nourriture = 100;
     private int bois = 10;
     private int fer = 0;
     private int pierre = 0;

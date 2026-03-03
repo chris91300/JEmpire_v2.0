@@ -9,7 +9,7 @@ public class Villageois{
      * Artisant ameliorer batiment, produit outils (atelier ou chantier), reposer
      * Chef: motive les troupes (+1 ou 2 aux soldat), agit comme soldat en plus perf
      */
-    static String[] actionsPossibles = {
+    /*static String[] actionsPossibles = {
         "voguer",
         "reposer",
         "construire",
@@ -20,30 +20,63 @@ public class Villageois{
         "ameliorer",
         "produire",
         "motiver"
-    };
-    protected int sante = 10;
-    protected int quantite = 4;
+    };*/
+    protected int sante;
     protected String nom = "Villageois";
     protected String action = "reposer";
+    protected int totalNonActif;
+    protected int totalActif = 0;
 
-
-   /* public Villageois(String nom){
-        this.nom = nom;
-    }*/
+    public Villageois(){
+        this.totalNonActif = 4;
+        this.sante = 10;
+    }
 
     public Villageois(String nom, int quantite, int sante){
         this.nom = nom;
         this.sante = sante;
-        this.quantite = quantite;
+        this.totalNonActif = quantite;
     }
 
+    public void devientNonActif(int quantite){
+        totalActif -= quantite;
+        totalNonActif += quantite;
+    }
 
+     public void devientActif(int quantite){
+        totalActif += quantite;
+        totalNonActif -= quantite;
+    }
+
+    public void rentreDeLeurTache(){
+        totalNonActif += totalActif;
+        totalActif = 0;
+    }
+
+    public void ajoutDeNouveauVillageois(int quantite){
+        totalNonActif += quantite;
+        System.out.println("Super vous avez augmenté votre population");
+    }
+
+    public int getTotalDisponible(){
+        return totalNonActif;
+    }
+
+    public void sontIlsDisponible(int quantite){
+        if( quantite > totalNonActif){
+            throw new Error("pas assez de villageois de disponible");
+        }
+    }
+
+    public void meurtDeFain(){
+        totalNonActif--;
+    }
 
     public String getAction() {
         return action;
     }
 
-    public void setAction(String action) {
+    /*public void setAction(String action) {
         boolean isPossible = false;
         for(String actionPossible: actionsPossibles){
             if(actionPossible.equals(action)){
@@ -57,7 +90,7 @@ public class Villageois{
             System.out.println("action inconnue");
         }
         
-    }
+    }*/
 
     public int getSante() {
         return sante;

@@ -2,39 +2,21 @@ package models.batiments;
 
 import models.Village;
 
-public class Maison {
-    private int quantiteDeVillageoisNecessaireALaConstruction = 2;
+public class Maison extends Batiment{
     private int capacite = 4;
-    private int quantiteDeMaison = 1;
-    private int quantiteBoisNecessaire = 2;
-    private int villageoisAuTravail = 0;
 
-
-    public void construire(Village village) {
-        int villageoisNonActif = village.getVillageoisNonActive();
-        if(villageoisNonActif < quantiteDeVillageoisNecessaireALaConstruction){
-            System.out.println("Vous n'avez pas assez de villageois de disponible");
-        }else{
-            int quantiteTotalBois = village.getBois();
-            if (quantiteTotalBois < quantiteBoisNecessaire) {
-                System.out.println("Pas assez de bois pour construire la maison");
-            } else {
-                quantiteDeMaison++;
-                villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
-                village.retireBois(quantiteBoisNecessaire);
-                System.out.println("Vous avez construit une maison");
-                village.setCapacite(capacite * quantiteDeMaison);
-                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
-            }
-        }
-
+    public Maison(){
+        super("maison", 1, 2, 2, 0);
     }
 
 
-    public int recupereVillageoisQuiConstruisentUneMaison(){
-        int villageoisRecuperes = villageoisAuTravail;
-        villageoisAuTravail = 0;
-        return villageoisRecuperes;
+    @Override
+    public void construire(Village village) {        
+        super.construire(village);
+        village.setCapacite(capacite * totalBatimentConstruit);
     }
    
+    public int getQuantiteDeVillageoisNecessaireALaConstruction(){
+        return quantiteDeVillageoisNecessaireALaConstruction;
+    }
 }

@@ -1,41 +1,22 @@
 package models.batiments;
 
-import models.Village;
+//import models.Village;
 
-public class Ferme {
+public class Ferme extends Batiment {
     private int nourrituresProduitsChaqueJour = 5;
-    private int quantiteBoisNecessaire = 2;
-    private int quantiteFerme = 0;
     private int quantiteDeVillageoisNecessaireALaConstruction = 2;
-    private int villageoisAuTravail = 0;
+    
+    public Ferme(){
+        super("ferme", 0, 2, 2, 0);
+    }
 
     public int recupereNourritureProduite() {
-        return quantiteFerme * nourrituresProduitsChaqueJour;
+        return totalBatimentConstruit * nourrituresProduitsChaqueJour;
     }
+   
 
-    public void construire(Village village) {
-        int quantiteDeVillageoisDispo = village.getVillageoisNonActive();
-        if (quantiteDeVillageoisDispo < quantiteDeVillageoisNecessaireALaConstruction) {
-            System.out.println("Pas assez de villageois disponible pour construire une ferme");
-        } else {
-
-            int quantiteTotalBois = village.getBois();
-            if (quantiteTotalBois < quantiteBoisNecessaire) {
-                System.out.println("Pas assez de bois pour construire la ferme");
-            } else {
-                quantiteFerme++;
-                village.retireBois(quantiteBoisNecessaire);
-                System.out.println("Vous avez construit une maison");
-                villageoisAuTravail += quantiteDeVillageoisNecessaireALaConstruction;
-                village.deplaceVillageoisNonActifVersActif(quantiteDeVillageoisNecessaireALaConstruction);
-            }
-        }
-    }
-
-    public int recupereVillageoisQuiConstruisentUneFerme() {
-        int villageoisRecuperes = villageoisAuTravail;
-        villageoisAuTravail = 0;
-        return villageoisRecuperes;
+    public int getQuantiteDeVillageoisNecessaireALaConstruction(){
+        return quantiteDeVillageoisNecessaireALaConstruction;
     }
 
 }

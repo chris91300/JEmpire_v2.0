@@ -2,34 +2,35 @@ package models.batiments;
 
 import models.Village;
 
-public class Foret {
+public class Foret extends Batiment {
     private int totalVillageoisPouvantAllerEnForet = 4;
-    private int foretsTrouvees = 1;
     private int villageoisEnForet = 0;
     private int quantiteMaxDeNourriturePouvantEtreTrouve = 4;
     private int quantiteMaxDeBoisPouvantEtreTrouve = 6;
     private int quantiteMaxDeVillageoisePouvantEtreTrouve = 2;
     private int quantiteMaxDeMinesPouvantEtreTrouve = 1;
 
+    public Foret(){
+        super("foret", 1, 0, 0, 0);
+    }
+   
+
     public void villageoisVoulantPartirEnForet(int villageoisVoulantPartir, Village village){
-        int capaciteMax = foretsTrouvees * totalVillageoisPouvantAllerEnForet - villageoisEnForet;
+        int capaciteMax = totalBatimentConstruit * totalVillageoisPouvantAllerEnForet - villageoisEnForet;
         if(villageoisVoulantPartir > capaciteMax){
-            System.out.println("Plus de place disponible.");
+            throw new Error("Plus de place disponible.");
+            
         }else{
             villageoisEnForet += villageoisVoulantPartir;
-            village.deplaceVillageoisNonActifVersActif(villageoisVoulantPartir);
         }
     }
-
-   
+ 
 
     private int randomRessources(int min, int max ){      
         return (int) (Math.random() * (max - min + 1) + min);
     }
 
     public int[] recuperereRessourcesTrouvees(){
-        // nourriture, bois, villageois;
-        // attention au random(0, 0) !!! a gérer
         int personnesQuiOntRienTrouveesPourLeMoment = villageoisEnForet;
         int nourritureTrouve = 0;
         int boisTrouve = 0;
@@ -60,14 +61,24 @@ public class Foret {
             }
         }
         
+        
+        if(villageoisEnForet > 0){
+             System.out.printf(
+                "Vous avez trouvé dans la forêt : %d personnes, %d nourritures, %d bois, %d mines.\n",
+                villageoisTrouve,
+                nourritureTrouve,
+                boisTrouve,
+                minesTrouve
+            );
+        }
+       
+        villageoisEnForet = 0;
         int[] ressources = {nourritureTrouve, boisTrouve, villageoisTrouve, minesTrouve};
         return ressources;
     }
 
-
-    public int recupereVillageoisPartientEnForet(){        
-        int villageoisRecuperes = villageoisEnForet;
-        villageoisEnForet = 0;        
-        return villageoisRecuperes;
+    @Override
+    public void lesVillageoisSeReposent(){
+        villageoisEnForet = 0;
     }
 }
