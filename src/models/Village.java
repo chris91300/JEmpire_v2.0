@@ -10,22 +10,22 @@ import models.batiments.Mine;
 import models.batiments.Atelier;
 import models.batiments.MurDeDefense;
 import models.ressources.Ressource;
+import models.unites.Artisan;
+import models.unites.Chef;
+import models.unites.Eclaireur;
+import models.unites.Soldat;
+import models.unites.Villageois;
 
 public class Village {
     static Scanner scanner = new Scanner(System.in);
     private int capacite = 4;
-    private int villageoisNonActive = 4;
-    private int villageoisActive = 0;
-    private int soldatsNonActive = 0;
-    private int soldatsActive = 0;
-    private int eclaireursNonActive = 0;
-    private int eclaireursActive = 0;
-    private int artisansNonActive = 0;
-    private int artisansActive = 0;
-    private int chefNonActive = 0;
-    private int chefActive = 0;
+    Villageois villageois = new Villageois();
+    Soldat soldat = new Soldat();
+    Eclaireur eclaireur = new Eclaireur();
+    Artisan artisan = new Artisan();
+    Chef chef = new Chef();
     private Maison maison = new Maison();
-    private Caserne caserne = new Caserne();;
+    private Caserne caserne = new Caserne();
     private Ferme ferme = new Ferme();
     private Mine mine = new Mine();
     private Foret foret = new Foret();
@@ -43,9 +43,12 @@ public class Village {
                 afficherJour();
                 ressource.afficheRessources();
                 afficherVillageoisNonActif();
-                int choixDuMenu = afficherMenuGlobal();
-                int action = proposeMenuEnFonctionDuPersonnage(choixDuMenu);
-                faitAction(action);
+                boolean isOk;
+                do {
+                    int choixDuMenu = afficherMenuGlobal();
+                    int action = proposeMenuEnFonctionDuPersonnage(choixDuMenu);
+                    isOk = faitAction(action);
+                } while(!isOk);
                 if (isOver) {
                     break;
                 }
@@ -57,7 +60,7 @@ public class Village {
             lesVillageoisOntFiniLeurtache();
             desGensVeulentrejoindreLeVillage();
             lesVillageoisMangent();
-            YEnAvaitIlPourToutLeMonde();
+            yEnAvaitIlPourToutLeMonde();
             if (isOver) {
                 break;
             }
@@ -77,11 +80,11 @@ public class Village {
         System.out.println("\t\tDISPONIBLE\t\t");
         System.out.printf(
             "villageois: %d | soldat: %d | éclaireur: %d | artisan: %d | chef: %d \n",
-            villageoisNonActive,
-            soldatsNonActive,
-            eclaireursNonActive,
-            artisansNonActive,
-            chefNonActive
+            villageois.getTotalDisponible(),
+            soldat.getTotalDisponible(),
+            eclaireur.getTotalDisponible(),
+            artisan.getTotalDisponible(),
+            chef.getTotalDisponible()
         );
         System.out.println("****************************************");
     }
@@ -91,22 +94,22 @@ public class Village {
         System.out.println("que fait on aujourd'hui?");
         System.out.println("assigner des villageois à une tache: 1");
 
-        if(soldatsNonActive > 0){
+        if(soldat.getTotalDisponible() > 0){
             System.out.println("assigner des soldats à une tache: 2");
             numberActionMax++;
         }
 
-        if(artisansNonActive > 0){
+        if(artisan.getTotalDisponible() > 0){
             System.out.println("assigner des artisans à une tache: 3");
             numberActionMax++;
         }
 
-        if(eclaireursNonActive > 0){
+        if(eclaireur.getTotalDisponible() > 0){
             System.out.println("assigner des éclaireurs à une tache: 4");
             numberActionMax++;
         }
 
-        if(chefNonActive > 0){
+        if(chef.getTotalDisponible() > 0){
             System.out.println("assigner le chef à une tache: 5");
             numberActionMax++;
         }
@@ -207,74 +210,110 @@ public class Village {
 
     }
 
-    private void faitAction(int action) {
-        switch (action) {
-            case 1:
-                // construire maison
-                maison.construire(this);
-                break;
+    private boolean faitAction(int action) {
+        int villageoisAffecter = 1;
+        boolean isOk = true;
+        try{
+            switch (action) {
+                case 1:
+                    // construire maison
+                    villageoisAffecter = maison.getQuantiteDeVillageoisNecessaireALaConstruction();
+                    villageois.sontIlsDisponible(villageoisAffecter);
+                    maison.construire(this);
+                    villageois.devientActif(villageoisAffecter);                 
+                    break;
 
-            case 2:
-                // aller en foret
-                foret.villageoisVoulantPartirEnForet(1, this);
-                break;
+                case 2:
+                    // aller en foret
+                    villageoisAffecter = 1;
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    foret.villageoisVoulantPartirEnForet(1, this);
+                    villageois.devientActif(villageoisAffecter);                      
+                    break;
 
-             case 3:
-                // aller à la mine
-                mine.ajouteVillageoisDansLesMines(1, this);
-                break;
+                case 3:
+                    // aller à la mine
+                    villageoisAffecter = 1;
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    mine.ajouteVillageoisDansLesMines(1, this);
+                    villageois.devientActif(villageoisAffecter);   
+                    break;
 
-            case 4:
-                // construire caserne
-                caserne.construire(this);
-                break;
+                case 4:
+                    // construire caserne
+                    villageoisAffecter = caserne.getQuantiteDeVillageoisNecessaireALaConstruction();
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    caserne.construire(this);
+                    villageois.devientActif(villageoisAffecter);   
+                    break;
 
-            case 5:
-                // construire ferme
+                case 5:
+                    // construire ferme
+                    villageoisAffecter = caserne.getQuantiteDeVillageoisNecessaireALaConstruction();
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    ferme.construire(this);
+                    villageois.devientActif(villageoisAffecter);   
+                    break;
 
-                ferme.construire(this);
+                case 6:
+                    // construire atelier
+                    villageoisAffecter = caserne.getQuantiteDeVillageoisNecessaireALaConstruction();
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    atelier.construire(this);
+                    villageois.devientActif(villageoisAffecter);   
+                    break;
 
-                break;
+                case 7:
+                    // construire mur de defense
+                    villageoisAffecter = murDeDefense.getQuantiteDeVillageoisNecessaireALaConstruction();
+                    villageois.sontIlsDisponible(villageoisAffecter);                                 
+                    murDeDefense.construire(this);
+                    villageois.devientActif(villageoisAffecter);   
+                    break;
 
-            case 6:
-                // construire atelier
-                atelier.construire(this);
+                case 8:
+                    // former des soldats
+                    villageoisAffecter = 1;
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    caserne.ajouteVillageoisEnFormation(1, "soldat", this);
+                    villageois.devientActif(villageoisAffecter);
+                    break;
 
-                break;
+                case 9:
+                    // former des éclaireurs
+                    villageoisAffecter = 1;
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    caserne.ajouteVillageoisEnFormation(1, "eclaireur", this);
+                    villageois.devientActif(villageoisAffecter); 
 
-            case 7:
-                // construire mur de defense
-                murDeDefense.construire(this);
-                break;
+                case 10:
+                    // former des artisans
+                    villageoisAffecter = 1;
+                    villageois.sontIlsDisponible(villageoisAffecter);                    
+                    atelier.villageoisEnFormation(1, this);
+                    villageois.devientActif(villageoisAffecter); 
+                    break;
 
-            case 8:
-                // former des soldats
-                caserne.ajouteVillageoisEnFormation(1, "soldat", this);
-                break;
+                case 11:
+                    journeeTerminee = true;
+                    break;
 
-            case 9:
-                // former des éclaireurs
-                caserne.ajouteVillageoisEnFormation(1, "eclaireur", this);
-                break;
+                case 12:
+                    isOver = true;
+                    System.out.println("On quitte le jeu");
+                    break;
 
-            case 10:
-                // former des artisans
-                atelier.villageoisEnFormation(1, this);
-                break;
-
-            case 11:
-                // construire mur de defense
-                journeeTerminee = true;
-                break;
-
-            case 12:
-                isOver = true;
-                System.out.println("On quitte le jeu");
-                break;
-
-            default:
-                System.out.println("action inconnue.");
+                default:
+                    System.out.println("action inconnue.");
+                    isOk = false;
+            }
+        }catch(Error e){
+            System.out.println(e.getMessage());
+            isOk = false;
         }
+
+        return isOk;
+        
     }
 
     private void updateRessources() {
@@ -303,8 +342,8 @@ public class Village {
                 System.out.println("Vous n'avez pas assez de place");
             } else {
                 // on augmente les villageois
-                villageoisNonActive += villageoisTrouverEnForet;
-                System.out.println("Super vous avez augmenté votre population");
+                villageois.ajoutDeNouveauVillageois(villageoisTrouverEnForet);
+                
             }
         }
 
@@ -315,94 +354,23 @@ public class Village {
     }
 
     private void lesVillageoisOntFiniLeurtache() {
-        // maison
-        finisDeConstruireLesMaisons();
+        villageois.rentreDeLeurTache();
+        soldat.rentreDeLeurTache();
+        eclaireur.rentreDeLeurTache();
+        artisan.rentreDeLeurTache();
+        chef.rentreDeLeurTache();
 
-        // foret
-        lesVillageoisSontDeRetourDeLaForet();
-
-        // ferme
-        finisDeConstruireLesFermes();
-
-        // atelier
-        finisDeConstruireLesAteliers();
-
-        formationAtelierTerminee();
-
-        // mine
-        lesVillageoisRentreDeLaMine();
-
-        // mur
-        finisDeConstruireLeMur();
-
-        // caserne
-        finisDeConstruireLesCasernes();
-        formationALaCaserneTermine();
-    }
-
-    private void formationALaCaserneTermine() {
-        int[] villageoisFormes = caserne.recupereVillageoisEnFormation();
-        int soldats = villageoisFormes[0];
-        int eclaireurs = villageoisFormes[1];
-        soldatsNonActive += soldats;
-        villageoisActive -= soldats;
-        villageoisNonActive -= soldats;
-        eclaireursNonActive += eclaireurs;
-        villageoisActive -= eclaireurs;
-        villageoisNonActive -= eclaireurs;
-    }
-
-    private void finisDeConstruireLesCasernes() {        
-        int villageoisQuiOntFinisDeConstruireCasernes = caserne.recupereVillageoisQuiOntFiniLaConstructionDesCaserne();
-        villageoisActive -= villageoisQuiOntFinisDeConstruireCasernes;
-        villageoisNonActive += villageoisQuiOntFinisDeConstruireCasernes;
-    }
-
-    private void finisDeConstruireLesMaisons() {
-        int villageoisQuiOntFinisDeConstruireMaisons = maison.recupereVillageoisQuiConstruisentUneMaison();
-        villageoisActive -= villageoisQuiOntFinisDeConstruireMaisons;
-        villageoisNonActive += villageoisQuiOntFinisDeConstruireMaisons;
-    }
-
-    private void lesVillageoisSontDeRetourDeLaForet() {
-        int villageoisDeRetour = foret.recupereVillageoisPartientEnForet();
-        villageoisActive -= villageoisDeRetour;
-        villageoisNonActive += villageoisDeRetour;
-    }
-
-    private void finisDeConstruireLesFermes() {
-        int villageoisQuiOntFinisDeConstruireFermes = ferme.recupereVillageoisQuiConstruisentUneFerme();
-        villageoisActive -= villageoisQuiOntFinisDeConstruireFermes;
-        villageoisNonActive += villageoisQuiOntFinisDeConstruireFermes;
-    }
-
-    private void finisDeConstruireLesAteliers() {
-        // afaire
-        int villageoisQuiOntFinisDeConstruireAteliers = atelier.recupereVillageoisQuiOntConstruitAtelier();
-        villageoisActive -= villageoisQuiOntFinisDeConstruireAteliers;
-        villageoisNonActive += villageoisQuiOntFinisDeConstruireAteliers;
-    }
-
-    private void formationAtelierTerminee() {
-        int villageoisFormes = atelier.recupereVillageoisEnFormation();
-        villageoisActive -= villageoisFormes;
-        artisansNonActive += villageoisFormes;
-    }
-
-    private void lesVillageoisRentreDeLaMine() {
-        int villageoisDeRetourDeLaMine = mine.recupereVillageoisPartiALaMine();
-        villageoisActive -= villageoisDeRetourDeLaMine;
-        villageoisNonActive += villageoisDeRetourDeLaMine;
-    }
-
-    private void finisDeConstruireLeMur() {
-        int villageoisQuiOntFinisDeConstruireLeMur = murDeDefense.recupererVillageois();
-        villageoisActive -= villageoisQuiOntFinisDeConstruireLeMur;
-        villageoisNonActive += villageoisQuiOntFinisDeConstruireLeMur;
+        maison.lesVillageoisSeReposent();
+        foret.lesVillageoisSeReposent();
+        caserne.lesVillageoisSeReposent();
+        ferme.lesVillageoisSeReposent();
+        mine.lesVillageoisSeReposent();
+        atelier.lesVillageoisSeReposent();
+        murDeDefense.lesVillageoisSeReposent();
     }
 
     private void desGensVeulentrejoindreLeVillage() {
-        // il y a un soucis ici. si 0 villageois il nous demande quand meme
+        
         double tauxDeCroissance = 0.2;
         int population = getPopulation();
         int inconnus = (int) tauxDeCroissance * population * (1 - (population / capacite));
@@ -417,7 +385,7 @@ public class Village {
                     System.out.println("Vous n'avez pas assez de place");
                 } else {
                     // on augmente les villageois
-                    villageoisNonActive += inconnus;
+                    villageois.ajoutDeNouveauVillageois(inconnus);
                     System.out.println("Super vous avez augmenté votre population");
                 }
             }
@@ -431,30 +399,30 @@ public class Village {
     }
 
     
-    private void YEnAvaitIlPourToutLeMonde(){
+    private void yEnAvaitIlPourToutLeMonde(){
         int nourritureRestante = ressource.getNourriture();
         
         if(nourritureRestante < 0){
            
             for(int i=nourritureRestante; i<0; i++){
-                if(villageoisNonActive > 0){
-                    villageoisNonActive--;
+                if(villageois.getTotalDisponible() > 0){
+                    villageois.meurtDeFain();
                     ressource.ajouteNourriture(1);
                     continue;
-                }else if(artisansNonActive > 0){
-                    artisansNonActive--;
+                }else if(artisan.getTotalDisponible() > 0){
+                    artisan.meurtDeFain();
                     ressource.ajouteNourriture(1);
                     continue;
-                }else if(soldatsNonActive > 0){
-                    soldatsNonActive--;
+                }else if(soldat.getTotalDisponible() > 0){
+                    soldat.meurtDeFain();
                     ressource.ajouteNourriture(1);
                     continue;
-                }else if( eclaireursNonActive > 0){
-                    eclaireursNonActive--;
+                }else if( eclaireur.getTotalDisponible() > 0){
+                    eclaireur.meurtDeFain();
                     ressource.ajouteNourriture(1);
                     continue;
                 }else{
-                    chefNonActive--;
+                    chef.meurtDeFain();
                     ressource.ajouteNourriture(1);
                 }
             }
@@ -473,7 +441,7 @@ public class Village {
     }
 
     private int getPopulation() {
-        return villageoisNonActive + soldatsNonActive + eclaireursNonActive + artisansNonActive + chefNonActive;
+        return villageois.getTotalDisponible() + soldat.getTotalDisponible() + eclaireur.getTotalDisponible() + artisan.getTotalDisponible() + chef.getTotalDisponible();
     }
 
     public int getPierre() {
@@ -492,16 +460,6 @@ public class Village {
         ressource.retireBois(quantite);
     }
 
-    public int getVillageoisNonActive() {
-        return villageoisNonActive;
-    }
-
-    public void deplaceVillageoisNonActifVersActif(int quantite) {
-        villageoisNonActive -= quantite;
-        villageoisActive += quantite;
-        System.out.println("villageois non actif = "+ villageoisNonActive);
-        System.out.println("villageois actif = "+ villageoisActive);
-    }
 
     private int demandeAction(int min, int max) {
         boolean isValid = false;
